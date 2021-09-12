@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const {Schema} = require("mongoose");
 
-const schema = mongoose.Schema
+const Schema = mongoose.Schema
 
 const productSchema=new Schema({
     title:{

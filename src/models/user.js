@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-const {use} = require("express/lib/router");
 const Schema = mongoose.Schema
 const userSchema = new Schema({
     name: {
@@ -41,24 +40,23 @@ userSchema.methods.addToCart = function (product) {
             quantity: newQuantity
         });
     }
-    const updatedCart = {
+    this.cart = {
         items: updatedCartItems
-    };
-    this.cart = updatedCart
+    }
     return this.save()
-    // db
-    //     .collection('users')
-    //     .updateOne(
-    //         {_id: new ObjectId(this._id)},
-    //         {$set: {cart: updatedCart}}
-    //     );
 }
+
 
 userSchema.methods.removeFromCart = function (productId) {
     const updatedCartItems = this.cart.items.filter(item => {
         return item.productId.toString() !== productId.toString()
     })
     this.cart.items = updatedCartItems
+    return this.save()
+}
+
+userSchema.methods.clearCart = function(){
+    this.cart = {items:[]}
     return this.save()
 }
 
